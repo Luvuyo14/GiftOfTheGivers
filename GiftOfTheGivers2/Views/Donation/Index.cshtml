@@ -1,0 +1,188 @@
+﻿@model GiftOfTheGivers2.Models.DonationModel
+
+@{
+    ViewData["Title"] = "Make a Donation";
+}
+
+<div class="container py-5">
+
+    <!-- Header with Logo -->
+    <div class="text-center mb-5">
+
+        <img src="~/images/Logo.png"
+             alt="Gift of the Givers Logo"
+             style="max-height: 130px;" />
+
+        <h1 class="fw-bold text-gotg">Make a Donation</h1>
+
+        <p class="lead text-muted">
+            Your contribution helps support humanitarian relief.
+        </p>
+
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8 col-lg-7">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-gotg text-white text-center py-3">
+                    <h3 class="mb-0 fs-4 fw-bold">Donation Details</h3>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-controller="Donation"
+                          asp-action="Index"
+                          method="post">
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3">
+                        </div>
+
+
+                        <!-- Donor Name -->
+                        <div class="mb-3">
+
+                            <label asp-for="DonorName"
+                                   class="form-label fw-bold">
+                            </label>
+
+                            <input asp-for="DonorName"
+                                   class="form-control"
+                                   placeholder="Enter your full name" />
+
+                            <span asp-validation-for="DonorName"
+                                  class="text-danger small">
+                            </span>
+
+                        </div>
+
+
+                        <!-- Email -->
+                        <div class="mb-3">
+
+                            <label asp-for="Email"
+                                   class="form-label fw-bold">
+                            </label>
+
+                            <input asp-for="Email"
+                                   class="form-control"
+                                   placeholder="Enter your email address" />
+
+                            <span asp-validation-for="Email"
+                                  class="text-danger small">
+                            </span>
+
+                        </div>
+
+
+                        <!-- Amount -->
+                        <div class="mb-3">
+
+                            <label asp-for="Amount"
+                                   class="form-label fw-bold">
+                            </label>
+
+                            <input asp-for="Amount"
+                                   type="number"
+                                   step="0.01"
+                                   class="form-control"
+                                   placeholder="Enter donation amount" />
+
+                            <span asp-validation-for="Amount"
+                                  class="text-danger small">
+                            </span>
+
+                        </div>
+
+
+                        <!-- Currency -->
+                        <div class="mb-3">
+
+                            <label asp-for="Currency"
+                                   class="form-label fw-bold">
+                                Currency
+                            </label>
+
+                            <select asp-for="Currency"
+                                    class="form-select">
+
+                                <option value="ZAR">
+                                    South African Rand (ZAR)
+                                </option>
+
+                                <option value="USD">
+                                    US Dollar (USD)
+                                </option>
+
+                                <option value="EUR">
+                                    Euro (EUR)
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Donation Type -->
+                        <div class="mb-4">
+
+                            <label asp-for="DonationType"
+                                   class="form-label fw-bold">
+                                Donation Type
+                            </label>
+
+                            <select asp-for="DonationType"
+                                    class="form-select">
+
+                                <option value="One-Time">
+                                    One-Time Donation
+                                </option>
+
+                                <option value="Recurring">
+                                    Recurring Donation
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Submit -->
+                        <div class="d-grid">
+
+                            <button type="submit"
+                                    class="btn btn-gotg btn-lg">
+
+                                Donate Now
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- Back to Home Button -->
+            <div class="text-center mt-4">
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="btn btn-outline-gotg">
+                    Back to Home
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

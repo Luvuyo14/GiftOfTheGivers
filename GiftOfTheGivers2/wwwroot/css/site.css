@@ -1,0 +1,101 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Form & Button Focus Outlines (Updated from blue to Gift of the Givers green) */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #054e29;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+}
+
+/* Hero Section (Updated from red rgba(220, 53, 69) to deep green rgba(5, 78, 41)) */
+.hero-section {
+    background: linear-gradient(rgba(5, 78, 41, 0.9), rgba(5, 78, 41, 0.9));
+    color: white;
+    padding: 80px 20px;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 50px;
+}
+
+/* Global Gift of the Givers Brand Classes */
+.bg-gotg {
+    background-color: #054e29 !important;
+}
+
+.text-gotg {
+    color: #054e29 !important;
+}
+
+/* Custom Buttons */
+.btn-gotg {
+    background-color: #054e29;
+    color: #ffffff;
+    border: 1px solid #054e29;
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-gotg:hover, .btn-gotg:focus {
+        background-color: #03361c;
+        color: #ffffff;
+        border-color: #03361c;
+    }
+
+.btn-outline-gotg {
+    background-color: transparent;
+    color: #054e29;
+    border: 1px solid #054e29;
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-outline-gotg:hover, .btn-outline-gotg:focus {
+        background-color: #054e29;
+        color: #ffffff;
+    }
+
+/* Footer Links */
+.footer-link {
+    color: #495057;
+    transition: color 0.2s ease-in-out;
+}
+
+    .footer-link:hover {
+        color: #054e29 !important;
+        text-decoration: underline !important;
+    }

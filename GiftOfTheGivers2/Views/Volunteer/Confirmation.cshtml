@@ -1,0 +1,84 @@
+﻿@model GiftOfTheGivers2.Models.VolunteerModel
+
+@{
+    ViewData["Title"] = "Volunteer Confirmation";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white text-center">
+                    <h2>Thank You!</h2>
+                </div>
+
+                <div class="card-body text-center">
+
+                    <h4>
+                        Your volunteer registration was successful.
+                    </h4>
+
+                    <p>
+                        Thank you for offering your time and skills
+                        to support Gift of the Givers.
+                    </p>
+
+                    <hr />
+
+                    <div class="text-start">
+
+                        <p>
+                            <strong>Name:</strong>
+                            @Model.FullName
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong>
+                            @Model.Email
+                        </p>
+
+                        <p>
+                            <strong>Phone:</strong>
+                            @Model.Phone
+                        </p>
+
+                        <p>
+                            <strong>Skills:</strong>
+                            @Model.Skills
+                        </p>
+
+                        <p>
+                            <strong>Availability:</strong>
+                            @Model.Availability
+                        </p>
+
+                        <p>
+                            <strong>Registration Date:</strong>
+                            @Model.RegistrationDate.ToString("dd MMMM yyyy HH:mm")
+                        </p>
+
+                    </div>
+
+                    <hr />
+
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="btn btn-primary">
+
+                        Return Home
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

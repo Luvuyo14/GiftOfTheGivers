@@ -1,0 +1,110 @@
+﻿@model GiftOfTheGivers2.Models.DonationModel
+
+@{
+    ViewData["Title"] = "Donation Confirmation";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white text-center">
+                    <h2>Thank You!</h2>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+
+                        <h4>
+                            Your donation has been recorded.
+                        </h4>
+
+                        <p>
+                            Thank you for supporting humanitarian
+                            relief through Gift of the Givers.
+                        </p>
+
+                    </div>
+
+                    <hr />
+
+                    <h5>Donation Details</h5>
+
+                    <p>
+                        <strong>Donor:</strong>
+                        @Model.DonorName
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        @Model.Email
+                    </p>
+
+                    <p>
+                        <strong>Amount:</strong>
+                        @Model.Amount.ToString("N2")
+                        @Model.Currency
+                    </p>
+
+                    <p>
+                        <strong>Donation Type:</strong>
+                        @Model.DonationType
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong>
+                        @Model.DonationDate.ToString("dd MMMM yyyy HH:mm")
+                    </p>
+
+                    <hr />
+
+                    <div class="alert alert-info">
+
+                        <h5>Tax Certificate</h5>
+
+                        <p class="mb-1">
+                            A placeholder tax certificate has been
+                            generated for this prototype.
+                        </p>
+
+                        <strong>
+                            Certificate Number:
+                            @Model.TaxCertificate
+                        </strong>
+
+                    </div>
+
+                    <div class="text-center mt-4">
+
+                        <a asp-controller="Donation"
+                           asp-action="Index"
+                           class="btn btn-danger">
+
+                            Make Another Donation
+
+                        </a>
+
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           class="btn btn-secondary">
+
+                            Return Home
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

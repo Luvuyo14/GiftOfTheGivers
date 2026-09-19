@@ -1,0 +1,76 @@
+﻿@model GiftOfTheGivers2.Models.DonationModel
+
+@{
+    ViewData["Title"] = "Section 18A Tax Certificate";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 p-4" id="certificate">
+
+                <!-- Certificate Header -->
+                <div class="text-center border-bottom pb-3 mb-4">
+                    <img src="~/images/Logo.png" alt="Gift of the Givers Logo" class="mb-2" style="max-height: 90px;" />
+                    <h2 class="fw-bold text-gotg mb-1">GIFT OF THE GIVERS FOUNDATION</h2>
+                    <p class="text-muted mb-0">Official Section 18A Donation Tax Certificate</p>
+                    <small class="text-secondary">PBO Reference No: 930001234</small>
+                </div>
+
+                <!-- Certificate Body -->
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <strong>Certificate Reference:</strong>
+                            <p class="text-muted">@ViewData["ReferenceNumber"]</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <strong>Date Issued:</strong>
+                            <p class="text-muted">@ViewData["Date"]</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-3 rounded mb-4">
+                        <h5 class="fw-bold text-gotg mb-3">Donor Details</h5>
+                        <p class="mb-1"><strong>Full Name / Entity:</strong> @Model.DonorName</p>
+                        <p class="mb-0"><strong>Email Address:</strong> @Model.Email</p>
+                    </div>
+
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Type</th>
+                                    <th class="text-end">Amount Paid</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Humanitarian Relief Contribution</td>
+                                    <td>@Model.DonationType</td>
+                                    <td class="text-end fw-bold">@Model.Currency @Model.Amount.ToString("N2")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p class="small text-muted text-center mt-4">
+                        Thank you for your generous support. This certificate is issued for tax deduction purposes under Section 18A of the Income Tax Act.
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="card-footer bg-white border-0 text-center pt-3">
+                    <button onclick="window.print()" class="btn btn-gotg me-2">
+                        Print / Save as PDF
+                    </button>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-gotg">
+                        Back to Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

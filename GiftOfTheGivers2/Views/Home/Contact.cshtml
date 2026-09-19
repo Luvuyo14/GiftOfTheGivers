@@ -1,0 +1,184 @@
+﻿@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="container py-5">
+
+    <!-- Heading with Logo -->
+    <div class="text-center mb-5">
+
+        <img src="~/images/Logo.png"
+             alt="Gift of the Givers Logo"
+             style="max-height: 130px;" />
+
+        <h1 class="fw-bold text-gotg">Contact Us</h1>
+
+        <p class="lead text-muted">
+            Get in touch with Gift of the Givers.
+        </p>
+
+    </div>
+
+
+    <div class="row justify-content-center">
+
+        <!-- Contact Information -->
+        <div class="col-md-5 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-gotg text-white py-3">
+
+                    <h3 class="mb-0 fs-4">
+                        Contact Information
+                    </h3>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <p class="text-muted">
+                        If you have questions about donations,
+                        volunteering or humanitarian projects,
+                        please contact us.
+                    </p>
+
+                    <hr />
+
+                    <p class="mb-3">
+                        <strong class="text-gotg">Organisation:</strong><br />
+                        Gift of the Givers
+                    </p>
+
+                    <p class="mb-3">
+                        <strong class="text-gotg">Email:</strong><br />
+                        <a href="mailto:info@giftofthegivers.org" class="text-decoration-none text-dark">
+                            info@giftofthegivers.org
+                        </a>
+                    </p>
+
+                    <p class="mb-3">
+                        <strong class="text-gotg">Phone:</strong><br />
+                        <a href="tel:+27118283330" class="text-decoration-none text-dark">
+                            +27 11 828 3330
+                        </a>
+                    </p>
+
+                    <p class="mb-0">
+                        <strong class="text-gotg">Location:</strong><br />
+                        South Africa
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Contact Form -->
+        <div class="col-md-7 mb-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-gotg text-white py-3">
+
+                    <h3 class="mb-0 fs-4">
+                        Send Us a Message
+                    </h3>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form>
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Full Name
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Enter your full name" />
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Email Address
+                            </label>
+
+                            <input type="email"
+                                   class="form-control"
+                                   placeholder="Enter your email address" />
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Subject
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Enter subject" />
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Message
+                            </label>
+
+                            <textarea class="form-control"
+                                      rows="5"
+                                      placeholder="Enter your message"></textarea>
+
+                        </div>
+
+
+                        <div class="d-grid">
+
+                            <button type="submit"
+                                    class="btn btn-gotg btn-lg">
+
+                                Send Message
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Back to Home -->
+
+    <div class="text-center mt-4">
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-outline-gotg">
+
+            Back to Home
+
+        </a>
+
+    </div>
+
+</div>
