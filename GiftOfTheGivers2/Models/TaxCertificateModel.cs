@@ -23,7 +23,7 @@ namespace GiftOfTheGivers2.Pages
                 return Page();
             }
 
-            // Your running Azure Function local endpoint
+            // Your running Azure Function local endpoint and it must be run first and the url is different from each device 
             string functionUrl = "http://localhost:7213/api/GenerateTaxCertificate";
 
             var payload = new
