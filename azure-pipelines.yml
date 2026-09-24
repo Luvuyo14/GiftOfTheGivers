@@ -39,7 +39,9 @@ steps:
     projects: '$(solutionPath)'
     arguments: '--configuration $(buildConfiguration) --no-build --logger trx'
 
-- script: echo "Using secret key ending in: $(DummyApiKey)"
+- script: |
+    echo Secret key value (masked below):
+    echo $(DummyApiKey)
   displayName: 'Demonstrate secret variable usage (masked in logs)'
   env:
     DummyApiKey: $(DummyApiKey)
