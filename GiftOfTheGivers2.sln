@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftOfTheGivers2", "GiftOfT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftOfTheGivers2.function", "GiftOfTheGivers2.function\GiftOfTheGivers2.function.csproj", "{840B8838-2D88-4659-97ED-382279EA6B4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftOfTheGivers.Helpers", "GiftOfTheGivers.Helpers\GiftOfTheGivers.Helpers.csproj", "{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{840B8838-2D88-4659-97ED-382279EA6B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{840B8838-2D88-4659-97ED-382279EA6B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{840B8838-2D88-4659-97ED-382279EA6B4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

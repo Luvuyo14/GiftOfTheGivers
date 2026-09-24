@@ -9,7 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+   
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="GiftOfTheGivers.Helpers" Version="1.0.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.52.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.OpenTelemetry" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />

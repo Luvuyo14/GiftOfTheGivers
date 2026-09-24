@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Newtownsoft.Json;
 
 namespace GiftOfTheGivers2.Controllers
 {
@@ -36,10 +36,13 @@ namespace GiftOfTheGivers2.Controllers
         {
             string role = HttpContext.Session.GetString("Role");
 
-            if (role != "Employee")
+
+            if(role !="Employee")
             {
                 return RedirectToAction("Login", "Account");
             }
+           
+
 
             // Build the payload for the Azure Function
             var payload = new

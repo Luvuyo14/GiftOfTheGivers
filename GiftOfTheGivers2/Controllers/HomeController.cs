@@ -9,12 +9,14 @@ namespace GiftOfTheGivers2.Controllers
             return View();
         }
 
-        public IActionResult About()
+     
+
+       public IActionResult Contact()
         {
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult About()
         {
             return View();
         }
