@@ -14,6 +14,7 @@ namespace GiftOfTheGivers2.Controllers
         public IActionResult Index()
         {
             return View();
+
         }
 
 
@@ -37,6 +38,7 @@ namespace GiftOfTheGivers2.Controllers
                 ViewBag.Date = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
                 // Route to the Tax Certificate View
+
                 return View("TaxCertificate", model);
 
             }
