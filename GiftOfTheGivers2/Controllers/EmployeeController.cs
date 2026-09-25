@@ -31,6 +31,7 @@ namespace GiftOfTheGivers2.Controllers
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> PostUpdate(string projectName, string update)
         {
@@ -53,15 +54,22 @@ namespace GiftOfTheGivers2.Controllers
                 UpdateText = update
             };
 
+
+
             var jsonContent = new StringContent(
                 JsonConvert.SerializeObject(payload),
                 Encoding.UTF8,
                 "application/json"
             );
 
+
+
             // Send POST request to your Azure Function endpoint
             string targetUrl = $"{_functionBaseUrl}employee/update";
             var response = await _httpClient.PostAsync(targetUrl, jsonContent);
+
+
+
 
             if (response.IsSuccessStatusCode)
             {

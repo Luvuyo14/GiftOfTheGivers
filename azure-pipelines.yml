@@ -1,0 +1,52 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  solutionPath: '**/*.sln'
+
+steps:
+- task: NuGetToolInstaller@1
+  displayName: 'Install NuGet'
+
+- task: NuGetAuthenticate@1
+  displayName: 'Authenticate with Azure Artifacts feed'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore dependencies'
+  inputs:
+    command: 'restore'
+    projects: '$(solutionPath)'
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.config'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build solution'
+  inputs:
+    command: 'build'
+    projects: '$(solutionPath)'
+    arguments: '--configuration $(buildConfiguration) --no-restore'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run unit tests'
+  inputs:
+    command: 'test'
+    projects: '$(solutionPath)'
+    arguments: '--configuration $(buildConfiguration) --no-build --logger trx'
+
+- script: |
+    echo Secret key value (masked below):
+    echo $(DummyApiKey)
+  displayName: 'Demonstrate secret variable usage (masked in logs)'
+  env:
+    DummyApiKey: $(DummyApiKey)
