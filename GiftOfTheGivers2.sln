@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftOfTheGivers2.function",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftOfTheGivers.Helpers", "GiftOfTheGivers.Helpers\GiftOfTheGivers.Helpers.csproj", "{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiftOfTheGivers2.Tests", "GiftOfTheGivers2.Tests\GiftOfTheGivers2.Tests.csproj", "{98A6F18B-98C3-4E79-AB21-CC8CB4544589}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.config = NuGet.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,10 @@ Global
 		{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FC4DFBF-EA19-4434-9BB7-7DD7A4FC5A15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98A6F18B-98C3-4E79-AB21-CC8CB4544589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A6F18B-98C3-4E79-AB21-CC8CB4544589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A6F18B-98C3-4E79-AB21-CC8CB4544589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A6F18B-98C3-4E79-AB21-CC8CB4544589}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

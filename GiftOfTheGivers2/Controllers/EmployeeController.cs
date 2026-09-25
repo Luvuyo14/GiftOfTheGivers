@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtownsoft.Json;
+using Newtonsoft.Json;
 
 namespace GiftOfTheGivers2.Controllers
 {
