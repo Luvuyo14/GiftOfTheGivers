@@ -13,7 +13,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  solutionPath: 'GiftOfTheGivers2/GiftOfTheGivers2.sln'
+  solutionPath: '**/*.sln'
 
 steps:
 - task: NuGetToolInstaller@1
