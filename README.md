@@ -1,6 +1,5 @@
 # Gift of the Givers Foundation — Web Application
-
-[![Build Status](PASTE-YOUR-BADGE-IMAGE-URL-HERE)]()
+[![Build Status](https://dev.azure.com/AWSAssignment/Gift%20of%20the%20Givers/_apis/build/status%2FGiftOfTheGivers2?branchName=main)](https://dev.azure.com/AWSAssignment/Gift%20of%20the%20Givers/_build/latest?definitionId=1&branchName=main)
 
 A web application built for the **Gift of the Givers Foundation**, developed to centralise
 disaster relief coordination — connecting donors, volunteers, and foundation employees
