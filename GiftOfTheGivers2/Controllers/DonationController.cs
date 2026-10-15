@@ -1,52 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GiftOfTheGivers2.Models;
-
 using GiftOfTheGivers.Helpers;
-
-
 
 namespace GiftOfTheGivers2.Controllers
 {
     public class DonationController : Controller
     {
-
         [HttpGet]
         public IActionResult Index()
         {
             return View();
-
         }
-
-
 
         [HttpPost]
         public IActionResult Index(DonationModel model)
         {
-
             if (ModelState.IsValid)
             {
-                string donorName = "Paballo Mentoor";
-                int donationId = 1045;
+                // Prototype donation id (no database yet)
+                int donationId = Random.Shared.Next(1, 999999);
 
-                // Call custom NuGet package utility method
-                string taxCertificateNumber = DonationHelper.FormatTaxCertificateNumber(donorName, donationId);
-                // Result: "GOTG-TAX-PAB-001045"
+                // Call custom NuGet package utility method using the donor from the form
+                string taxCertificateNumber =
+                    DonationHelper.FormatTaxCertificateNumber(model.DonorName, donationId);
 
-
-                // Generate a dummy receipt/reference number
-                ViewBag.ReferenceNumber = "GOTG-TAX-" + System.Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-                ViewBag.Date = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+                model.TaxCertificate = taxCertificateNumber;
+                ViewBag.ReferenceNumber = taxCertificateNumber;
+                ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
                 // Route to the Tax Certificate View
-
                 return View("TaxCertificate", model);
-
             }
 
-
-            
             return View(model);
         }
-
     }
 }
