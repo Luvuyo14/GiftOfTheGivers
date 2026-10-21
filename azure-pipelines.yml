@@ -1,4 +1,4 @@
-# Build, test and report pipeline for Gift of the Givers
+# Build, test, report and deploy pipeline for Gift of the Givers
 trigger:
   branches:
     include:
@@ -11,48 +11,129 @@ variables:
   buildConfiguration: 'Release'
   solutionPath: '**/*.sln'
   testProject: '**/GiftOfTheGivers2.Tests.csproj'
+  webAppName: 'GiftOfTheGivers220260825234617'
+  siteHost: 'giftofthegivers220260825234617-hte3byf3cah8bffe.southafricanorth-01.azurewebsites.net'
+  scmHost: 'giftofthegivers220260825234617-hte3byf3cah8bffe.scm.southafricanorth-01.azurewebsites.net'
 
-steps:
-- task: NuGetToolInstaller@1
-  displayName: 'Install NuGet'
+stages:
+- stage: Build
+  displayName: 'Build and test'
+  jobs:
+  - job: BuildAndTest
+    displayName: 'Build, test and package'
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: 'Install NuGet'
 
-- task: NuGetAuthenticate@1
-  displayName: 'Authenticate with Azure Artifacts feed'
+    - task: NuGetAuthenticate@1
+      displayName: 'Authenticate with Azure Artifacts feed'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Restore dependencies'
-  inputs:
-    command: 'restore'
-    projects: '$(solutionPath)'
-    feedsToUse: 'config'
-    nugetConfigPath: 'NuGet.config'
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore dependencies'
+      inputs:
+        command: 'restore'
+        projects: '$(solutionPath)'
+        feedsToUse: 'config'
+        nugetConfigPath: 'NuGet.config'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build solution'
-  inputs:
-    command: 'build'
-    projects: '$(solutionPath)'
-    arguments: '--configuration $(buildConfiguration) --no-restore'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build solution'
+      inputs:
+        command: 'build'
+        projects: '$(solutionPath)'
+        arguments: '--configuration $(buildConfiguration) --no-restore'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run unit and integration tests with coverage'
-  inputs:
-    command: 'test'
-    projects: '$(testProject)'
-    arguments: '--configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage"'
-    publishTestResults: true
-    testRunTitle: 'Unit and integration tests'
+    - task: DotNetCoreCLI@2
+      displayName: 'Run unit and integration tests with coverage'
+      inputs:
+        command: 'test'
+        projects: '$(testProject)'
+        arguments: '--configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage"'
+        publishTestResults: true
+        testRunTitle: 'Unit and integration tests'
 
-- task: PublishCodeCoverageResults@2
-  displayName: 'Publish code coverage report'
-  condition: succeededOrFailed()
-  inputs:
-    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
-    failIfCoverageEmpty: false
+    - task: PublishCodeCoverageResults@2
+      displayName: 'Publish code coverage report'
+      condition: succeededOrFailed()
+      inputs:
+        summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+        failIfCoverageEmpty: false
 
-- script: |
-    echo Secret key value (masked below):
-    echo $(DummyApiKey)
-  displayName: 'Demonstrate secret variable usage (masked in logs)'
-  env:
-    DummyApiKey: $(DummyApiKey)
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish web app package'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(buildConfiguration) --no-restore --output $(Build.ArtifactStagingDirectory)/web'
+        zipAfterPublish: true
+
+    - publish: '$(Build.ArtifactStagingDirectory)/web'
+      artifact: 'webapp'
+      displayName: 'Save web app package as build artifact'
+
+    - script: |
+        echo Secret key value (masked below):
+        echo $(DummyApiKey)
+      displayName: 'Demonstrate secret variable usage (masked in logs)'
+      env:
+        DummyApiKey: $(DummyApiKey)
+
+- stage: Deploy
+  displayName: 'Deploy to Azure App Service'
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - deployment: DeployWebApp
+    displayName: 'Deploy web app'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: PowerShell@2
+            displayName: 'Deploy package to App Service (zip deploy, with retries)'
+            env:
+              DEPLOY_USER: $(DeployUser)
+              DEPLOY_PASSWORD: $(DeployPassword)
+            inputs:
+              targetType: 'inline'
+              script: |
+                $ProgressPreference = 'SilentlyContinue'
+                $zip = Get-ChildItem "$(Pipeline.Workspace)/webapp" -Filter *.zip -Recurse | Select-Object -First 1
+                if (-not $zip) { Write-Error "No package found to deploy."; exit 1 }
+                Write-Host ("Deploying package: " + $zip.Name)
+                $pair = $env:DEPLOY_USER + ":" + $env:DEPLOY_PASSWORD
+                $token = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+                $uri = "https://$(scmHost)/api/zipdeploy"
+                $done = $false
+                for ($i = 1; $i -le 3; $i++) {
+                  try {
+                    Invoke-RestMethod -Uri $uri -Method POST -InFile $zip.FullName -ContentType "application/zip" -Headers @{ Authorization = "Basic $token" } -TimeoutSec 600
+                    Write-Host ("Attempt " + $i + ": package deployed to $(webAppName)")
+                    $done = $true
+                    break
+                  } catch {
+                    Write-Host ("Attempt " + $i + " failed: " + $_.Exception.Message)
+                    Start-Sleep -Seconds 20
+                  }
+                }
+                if (-not $done) { Write-Error "Deployment failed after 3 attempts."; exit 1 }
+
+          - task: PowerShell@2
+            displayName: 'Smoke test the live site (with retries)'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $url = "https://$(siteHost)/Donation"
+                $ok = $false
+                for ($i = 1; $i -le 6; $i++) {
+                  try {
+                    $r = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 60
+                    Write-Host ("Attempt " + $i + ": " + $url + " returned HTTP " + $r.StatusCode)
+                    if ($r.StatusCode -eq 200) { $ok = $true; break }
+                  } catch {
+                    Write-Host ("Attempt " + $i + " failed: " + $_.Exception.Message)
+                  }
+                  Start-Sleep -Seconds 15
+                }
+                if (-not $ok) { Write-Error "Smoke test failed: the live site did not return HTTP 200."; exit 1 }
