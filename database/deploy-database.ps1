@@ -27,12 +27,12 @@ function Invoke-Sql {
 }
 
 $builder = New-Object System.Data.SqlClient.SqlConnectionStringBuilder
-$builder.DataSource = 'tcp:' + $Server + ',1433'
-$builder.InitialCatalog = $Database
-$builder.UserID = $User
-$builder.Password = $Password
-$builder.Encrypt = $true
-$builder.ConnectTimeout = 60
+$builder['Data Source'] = 'tcp:' + $Server + ',1433'
+$builder['Initial Catalog'] = $Database
+$builder['User ID'] = $User
+$builder['Password'] = $Password
+$builder['Encrypt'] = $true
+$builder['Connect Timeout'] = 60
 
 $connection = New-Object System.Data.SqlClient.SqlConnection($builder.ConnectionString)
 
