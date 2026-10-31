@@ -17,6 +17,8 @@ variables:
   funcAppName: 'GiftOfTheGiversAWS'
   funcHost: 'giftofthegiversaws-gtbdeygkbzd7acdw.southafricanorth-01.azurewebsites.net'
   funcScmHost: 'giftofthegiversaws-gtbdeygkbzd7acdw.scm.southafricanorth-01.azurewebsites.net'
+  sqlServerHost: 'st10442920.database.windows.net'
+  sqlDatabaseName: 'GiftOfTheGiversDB'
 
 stages:
 - stage: Build
@@ -233,3 +235,15 @@ stages:
             exit 1
           }
           Write-Host 'Function test passed.'
+  - job: DeployDatabase
+    displayName: 'Deploy database schema (versioned migrations)'
+    steps:
+    - task: PowerShell@2
+      displayName: 'Apply pending SQL migrations'
+      env:
+        SQL_USER: $(SqlAdminUser)
+        SQL_PASSWORD: $(SqlAdminPassword)
+      inputs:
+        targetType: 'inline'
+        script: |
+          & '$(Build.SourcesDirectory)\database\deploy-database.ps1' -Server '$(sqlServerHost)' -Database '$(sqlDatabaseName)' -User $env:SQL_USER -Password $env:SQL_PASSWORD -Operator 'azure-pipeline'
