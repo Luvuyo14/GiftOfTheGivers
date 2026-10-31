@@ -65,7 +65,8 @@ public class GenerateTaxCertificate
             Currency = currency,
             DonationType = donationType,
             Date = DateTime.Now.ToString("yyyy-MM-dd"),
-            Organisation = "Gift of the Givers Foundation"
+            Organisation = Environment.GetEnvironmentVariable("ORGANISATION_NAME") ?? "Gift of the Givers Foundation"
+
         };
 
         return new OkObjectResult(certificateResponse);
