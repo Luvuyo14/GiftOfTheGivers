@@ -11,17 +11,19 @@ namespace GiftOfTheGivers2.Controllers
     public class EmployeeController : Controller
     {
         private readonly HttpClient _httpClient;
-        private readonly string _functionBaseUrl;
+        private readonly string? _functionBaseUrl;
+        private readonly string? _functionKey;
 
         public EmployeeController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _functionBaseUrl = configuration["AzureSettings:FunctionBaseUrl"];
+            _functionKey = configuration["AzureSettings:FunctionKey"];
         }
 
         public IActionResult Index()
         {
-            string role = HttpContext.Session.GetString("Role");
+            string? role = HttpContext.Session.GetString("Role");
 
             if (role != "Employee")
             {
@@ -31,19 +33,15 @@ namespace GiftOfTheGivers2.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> PostUpdate(string projectName, string update)
         {
-            string role = HttpContext.Session.GetString("Role");
+            string? role = HttpContext.Session.GetString("Role");
 
-
-            if(role !="Employee")
+            if (role != "Employee")
             {
                 return RedirectToAction("Login", "Account");
             }
-           
-
 
             // Build the payload for the Azure Function
             var payload = new
@@ -54,26 +52,35 @@ namespace GiftOfTheGivers2.Controllers
                 UpdateText = update
             };
 
-
-
             var jsonContent = new StringContent(
                 JsonConvert.SerializeObject(payload),
                 Encoding.UTF8,
                 "application/json"
             );
 
-
-
-            // Send POST request to your Azure Function endpoint
+            // Send POST request to the Azure Function endpoint
             string targetUrl = $"{_functionBaseUrl}employee/update";
-            var response = await _httpClient.PostAsync(targetUrl, jsonContent);
+            bool succeeded = false;
 
-
-
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                ViewBag.Message = "Project update posted successfully and logged to Azure Storage!";
+                using var request = new HttpRequestMessage(HttpMethod.Post, targetUrl) { Content = jsonContent };
+                if (!string.IsNullOrEmpty(_functionKey))
+                {
+                    request.Headers.Add("x-functions-key", _functionKey);
+                }
+
+                var response = await _httpClient.SendAsync(request);
+                succeeded = response.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException)
+            {
+                succeeded = false;
+            }
+
+            if (succeeded)
+            {
+                ViewBag.Message = "Project update posted successfully and recorded by the Azure Function.";
             }
             else
             {
