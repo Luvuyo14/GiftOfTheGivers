@@ -7,7 +7,7 @@ BEGIN
         EmployeeName NVARCHAR(100)     NOT NULL,
         Department   NVARCHAR(100)     NULL,
         ProjectName  NVARCHAR(100)     NULL,
-        UpdateText   NVARCHAR(1000)    NOT NULL,
+        [UpdateText] NVARCHAR(1000)    NOT NULL,
         CreatedAt    DATETIME2         NOT NULL CONSTRAINT DF_EmployeeUpdates_CreatedAt DEFAULT (SYSUTCDATETIME())
     );
 END
